@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<!-- saved from url=(0080)http://doyolab-corepon-env.eba-wm9wapty.ap-northeast-1.elasticbeanstalk.com/post -->
+<html lang="jp"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Corespondence_Analysis</title>
+    <link rel="stylesheet" href="./salon2_files/main.css">
+
+</head>
+<body>
+
+
+<h2>コレスポンデンス分析（対応分析）</h2>
+    <canvas id="corepon" width="800" height="800"></canvas>
+
+    <h3>累積寄与率</h3>
+    ２軸合わせて元のデータの何割を説明することができているかを表した数字。80％以上であれば、元データをかなり反映していると言われています。<br>
+    累積寄与率：5.19%
+
+    <h3>読み込みデータ</h3>
+        <table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>評判</th>
+      <th>感じがいい</th>
+      <th>仕上がり</th>
+      <th>予約数</th>
+      <th>価格</th>
+      <th>利便性</th>
+      <th>サービス</th>
+      <th>店の雰囲気</th>
+      <th>予約のしやすさ</th>
+      <th>クーポン</th>
+      <th>性別割合</th>
+      <th>座り心地</th>
+    </tr>
+    <tr>
+      <th>ヘアサロン</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>渋谷</th>
+      <td>5</td>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>原宿</th>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>新宿</th>
+      <td>4</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>横浜</th>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>横須賀</th>
+      <td>2</td>
+      <td>5</td>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>5</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>池袋</th>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>東京</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>蒲田</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>品川</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>プロットデータ</h3>
+    <h4>表側</h4>
+        <table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>渋谷</th>
+      <td>-0.215784</td>
+      <td>-0.052231</td>
+    </tr>
+    <tr>
+      <th>原宿</th>
+      <td>-0.165468</td>
+      <td>0.049606</td>
+    </tr>
+    <tr>
+      <th>新宿</th>
+      <td>-0.043913</td>
+      <td>0.209006</td>
+    </tr>
+    <tr>
+      <th>横浜</th>
+      <td>0.046598</td>
+      <td>0.059726</td>
+    </tr>
+    <tr>
+      <th>横須賀</th>
+      <td>0.304815</td>
+      <td>0.211128</td>
+    </tr>
+    <tr>
+      <th>池袋</th>
+      <td>-0.147274</td>
+      <td>0.048301</td>
+    </tr>
+    <tr>
+      <th>東京</th>
+      <td>-0.060540</td>
+      <td>-0.163088</td>
+    </tr>
+    <tr>
+      <th>蒲田</th>
+      <td>0.262128</td>
+      <td>-0.266585</td>
+    </tr>
+    <tr>
+      <th>品川</th>
+      <td>0.046651</td>
+      <td>-0.133576</td>
+    </tr>
+  </tbody>
+</table>
+    <h4>表頭</h4>
+        <table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>評判</th>
+      <td>-0.307614</td>
+      <td>0.154621</td>
+    </tr>
+    <tr>
+      <th>感じがいい</th>
+      <td>0.147819</td>
+      <td>0.436837</td>
+    </tr>
+    <tr>
+      <th>仕上がり</th>
+      <td>-0.081887</td>
+      <td>0.013766</td>
+    </tr>
+    <tr>
+      <th>予約数</th>
+      <td>-0.174571</td>
+      <td>-0.088614</td>
+    </tr>
+    <tr>
+      <th>価格</th>
+      <td>0.264523</td>
+      <td>-0.054868</td>
+    </tr>
+    <tr>
+      <th>利便性</th>
+      <td>-0.010012</td>
+      <td>-0.071276</td>
+    </tr>
+    <tr>
+      <th>サービス</th>
+      <td>0.094502</td>
+      <td>-0.088251</td>
+    </tr>
+    <tr>
+      <th>店の雰囲気</th>
+      <td>-0.124613</td>
+      <td>0.011443</td>
+    </tr>
+    <tr>
+      <th>予約のしやすさ</th>
+      <td>0.278288</td>
+      <td>0.024080</td>
+    </tr>
+    <tr>
+      <th>クーポン</th>
+      <td>0.131448</td>
+      <td>-0.058932</td>
+    </tr>
+    <tr>
+      <th>性別割合</th>
+      <td>-0.051267</td>
+      <td>-0.215623</td>
+    </tr>
+    <tr>
+      <th>座り心地</th>
+      <td>-0.170688</td>
+      <td>0.088898</td>
+    </tr>
+  </tbody>
+</table>
+
+
+    <script>
+        function draw() {
+            var row_data = JSON.stringify([[-0.2157837270012972, -0.05223130470911025], [-0.16546815993235384, 0.04960639730649365], [-0.04391291723191367, 0.20900641432835998], [0.04659751642942539, 0.05972606095021912], [0.30481540691034054, 0.21112808625839402], [-0.14727370304914106, 0.04830124677301411], [-0.06054021944587807, -0.16308812515510396], [0.2621280743185986, -0.2665847636265909], [0.04665140391692055, -0.1335764717623328]]);
+            var row_data_j = JSON.parse(row_data);
+            var col_data = JSON.stringify([[-0.3076141202041343, 0.1546214478793822], [0.14781922204886927, 0.436837264292248], [-0.08188693231732759, 0.013766315238268267], [-0.17457074094386846, -0.08861418998596766], [0.264523098919659, -0.054868227434191806], [-0.010012430055218994, -0.0712763746794194], [0.09450208259961078, -0.08825096309769012], [-0.12461293361196625, 0.01144304255320753], [0.2782876563838, 0.02407950108608093], [0.13144821106416232, -0.058932316838912806], [-0.051266957364927576, -0.21562320362666398], [-0.1706875902701605, 0.08889772058609254]]);
+            var col_data_j = JSON.parse(col_data);
+            var row_index = JSON.stringify(["\u6e0b\u8c37", "\u539f\u5bbf", "\u65b0\u5bbf", "\u6a2a\u6d5c", "\u6a2a\u9808\u8cc0", "\u6c60\u888b", "\u6771\u4eac", "\u84b2\u7530", "\u54c1\u5ddd"]);
+            var row_index_j = JSON.parse(row_index);
+            var col_index = JSON.stringify(["\u8a55\u5224", "\u611f\u3058\u304c\u3044\u3044\u3000", "\u4ed5\u4e0a\u304c\u308a", "\u4e88\u7d04\u6570", "\u4fa1\u683c", "\u5229\u4fbf\u6027", "\u30b5\u30fc\u30d3\u30b9", "\u5e97\u306e\u96f0\u56f2\u6c17", "\u4e88\u7d04\u306e\u3057\u3084\u3059\u3055", "\u30af\u30fc\u30dd\u30f3", "\u6027\u5225\u5272\u5408", "\u5ea7\u308a\u5fc3\u5730"]);
+            var col_index_j = JSON.parse(col_index);
+            var canvas = document.getElementById("corepon");
+            var ctx = document.getElementById("corepon").getContext("2d");
+
+            var x_center;
+            var y_center;
+
+            var max_val;
+            var graph_size=800;
+            var margin =1.2;
+
+            canvas.width=graph_size;
+            canvas.height=graph_size;
+            x_center = canvas.width/2;
+            y_center = canvas.height/2;
+            //グラフメモリの最大値を決める--------------------
+            max_val=0;
+            for(var r=0;r<row_data_j.length;r++){
+                for(var c=0;c<row_data_j[r].length;c++){
+                    if(Math.abs(row_data_j[r][c])>max_val){
+                        max_val = Math.abs(row_data_j[r][c]);
+                    }
+                }
+            }
+            for(var r=0;r<col_data_j.length;r++){
+                for(var c=0;c<col_data_j[r].length;c++){
+                    if(Math.abs(col_data_j[r][c])>max_val){
+                        max_val = Math.abs(col_data_j[r][c]);
+
+                    }
+                }
+            }
+            max_val=Math.ceil(margin * max_val*10)/10;
+            //---------------------------------------------
+
+            //x座標、y座標を指定-----------------------------
+            ctx.beginPath();
+                ctx.lineWidth = 0.5;
+                ctx.moveTo(0, y_center);
+                ctx.lineTo(canvas.width, y_center);
+                ctx.moveTo(x_center, 0);
+                ctx.lineTo(x_center, canvas.height);
+            ctx.stroke();
+
+            //ctx.fillText(aaa, x_center, y_center);
+
+            var point_r = 7
+            var myfont = "13px Ludica Sans Unicode"
+            //表側プロット-----------------------------
+            for(var r=0;r<row_data_j.length;r++){
+                var scale = graph_size / 2 / max_val;
+                var x = row_data_j[r][0] * scale + x_center;
+                var y = row_data_j[r][1] * scale * (-1) + y_center;
+                var idx = row_index_j[r];
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(255,105,180, 0.7)'; //ピンク
+                ctx.arc(x, y, point_r, 0, Math.PI * 2, false);
+                ctx.fill();
+                ctx.fillStyle = 'rgb(10,10,10)';
+                ctx.font =myfont;
+                ctx.fillText(idx, x, y);
+             }
+            //表頭プロット-----------------------------
+            for(var r=0;r<col_data_j.length;r++){
+                var scale = graph_size / 2 / max_val;
+                var x = col_data_j[r][0] * scale + x_center;
+                var y = col_data_j[r][1] * scale * (-1) + y_center;
+                var idx = col_index_j[r];
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(0,160,233, 0.7)'; //ピンク
+                ctx.arc(x, y, point_r, 0, Math.PI * 2, false);
+                ctx.fill();
+                ctx.fillStyle = 'rgb(10,10,10)';
+                ctx.font =myfont;
+                ctx.fillText(idx, x, y);
+             }
+        }
+
+        window.addEventListener("load", draw);
+    </script>
+
+</body></html>
